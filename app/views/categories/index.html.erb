@@ -1,3 +1,6 @@
+<ul class='nav sm-font justify-content-center'>
+    <li class='nav-item'><%= link_to "Back", store_path, class: 'text-success' %></li>
+</ul>
 <% @categories.each do |category| %>
-  <%= @category.title %>
+  <%= category.title %>
 <% end %>

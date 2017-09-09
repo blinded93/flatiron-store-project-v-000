@@ -1,7 +1,11 @@
-<h1><%= @category.title %></h1>
-
-<ul>
-<% @category.items.each do |item| %>
-    <li><%= link_to item.title, item_path(item) %></li>
-<% end %>
+<ul class='nav sm-font justify-content-center'>
+    <li class='nav-item'><%= link_to "Back", store_path, class: 'text-success' %></li>
+    <li class='nav-item'><%= link_to @category.title, category_path(@category), class: 'text-success' %></li>
 </ul>
+
+<% @category.items.each do |item| %>
+  <p class='text-center'><%= link_to item.title, item_path(item), class:'menu-font' %> -
+    <%= number_to_currency(item.price/100) %><br>
+    <%= button_to 'Add to Cart', line_items_path(item_id: item), class: 'btn btn-outline-info mx-auto', style: 'display: block;' %>
+  </p>
+<% end %>

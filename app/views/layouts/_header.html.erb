@@ -1,8 +1,26 @@
-<nav class="">
-    <ul>
-        <li> <%= link_to "Store Home", store_path %> </li>
-        <% if !!@cart %>
-          <li> <%= link_to "Cart", cart_path(current_cart) %></li>
-        <% end %>
-    </ul>
-</nav>
+<ul class='nav nav-tabs justify-content-center'>
+  <li class='nav-item <%= active_class("/") %>'>
+    <%= link_to "Store Home", store_path, class: 'nav-link menu-font' %>
+  </li>
+  <% if user_signed_in? %>
+    <li class='nav-item <%= active_class("/users/#{current_user.id}") %>'>
+      <%= link_to "Homepage", user_path(current_user), class: 'nav-link menu-font' %>
+    </li>
+    <% if !!@cart %>
+      <li class='nav-item <%= active_class("/carts/#{current_cart.id}") %>'>
+        <%= link_to "Cart", cart_path(current_cart), class: 'nav-link menu-font' %>
+      </li>
+    <% end %>
+    <li class='nav-item'>
+      <%= link_to "Sign Out", destroy_user_session_path, method:'delete', class: 'nav-link menu-font' %>
+    </li>
+  <% else %>
+    <li class='nav-item <%= active_class("/users/sign_in") %>'>
+      <%= link_to "Sign In", new_user_session_path, class: 'nav-link menu-font' %>
+    </li>
+    <li class='nav-item <%= active_class("/users/sign_up") %>'>
+      <%= link_to "Sign Up", new_user_registration_path, class: 'nav-link menu-font' %>
+    </li>
+  <% end %>
+</ul>
+<span class='text-center align-bottom text-info sm-font'><%= "Signed in as " + current_user.email if user_signed_in? %></span>
