@@ -3,9 +3,11 @@
     <%= link_to "Store Home", store_path, class: 'nav-link menu-font' %>
   </li>
   <% if user_signed_in? %>
-    <li class='nav-item <%= active_class("/carts/#{current_cart.id}") %>'>
-      <%= link_to "Cart", cart_path(current_cart), class: 'nav-link menu-font' %>
-    </li>
+    <% if !!current_cart %>
+      <li class='nav-item <%= active_class("/carts/#{current_cart.try(:id)}") %>'>
+        <%= link_to "Cart", cart_path(current_cart), class: 'nav-link menu-font' %>
+      </li>
+    <% end %>
     <li class='nav-item <%= active_class("/users/edit") %>'>
       <%= link_to "Edit Account", edit_user_registration_path, class: 'nav-link menu-font' %>
     </li>

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def current_cart
-    current_user.current_cart
+    @cart ||= current_user.carts.find_by(id: session[:cart_id])
   end
+
   helper_method :current_cart
 end

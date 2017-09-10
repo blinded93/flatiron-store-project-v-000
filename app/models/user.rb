@@ -3,6 +3,6 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, :rememberable, :trackable, :validatable
 
-  has_many :orders
+  has_many :orders, through: :carts
   has_many :carts
 end

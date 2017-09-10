@@ -4,7 +4,7 @@ class Cart < ActiveRecord::Base
 
   belongs_to :order
   belongs_to :user
-  
+
   def total
     total = 0.00
     line_items.each do |line_item|
@@ -13,15 +13,20 @@ class Cart < ActiveRecord::Base
     total
   end
 
-  def add_item(item)
-    if line_item = self.line_items.find_by(item_id:item)
+  def add_item(item_id)
+    binding.pry
+    if line_item = self.line_items.find_by(item_id:item_id)
       line_item.tap {|li| li.quantity += 1}
     else
-      LineItem.new(cart_id: self.id, item_id: item)
+      LineItem.new(cart_id: self.id, item_id: item_id)
     end
   end
 
   def empty?
     self.items.empty?
+  end
+
+  def self.set_cart(user)
+    user.carts.where(user_id: user.id).first_or_create(order_id: Order.create.id)
   end
 end

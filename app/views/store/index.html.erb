@@ -1,4 +1,4 @@
-<p class='text-center' style='display: inline;'><%= notice if notice %></p>
+<p class='text-center'><%= notice %></p>
 <ul class='nav sm-font justify-content-center'>
   <% @categories.each do |category| %>
     <li class='nav-item'><%= link_to category.title, category_path(category), class: 'text-success' %></li>
