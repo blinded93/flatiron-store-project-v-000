@@ -1,2 +1,8 @@
-<h1><%= @item.title %></h1>
-<h2>$ <%= @item.price %></h2>
+<div class="text-center">
+
+  <h1><%= @item.title %></h1>
+  <h2><%= number_to_currency(@item.price/100) %></h2>
+  <% if user_signed_in? %>
+    <%= button_to 'Add to Cart', line_items_path(item_id: @item), class: 'btn btn-sm btn-outline-info' %>
+  <% end %>
+</div>

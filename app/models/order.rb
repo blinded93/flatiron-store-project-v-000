@@ -1,4 +1,4 @@
 class Order < ActiveRecord::Base
-  belongs_to :cart
-  belongs_to :user
+  has_one :cart
+  has_many :users
 end

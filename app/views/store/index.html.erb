@@ -1,13 +1,15 @@
+<p class='text-center' style='display: inline;'><%= notice if notice %></p>
 <ul class='nav sm-font justify-content-center'>
   <% @categories.each do |category| %>
     <li class='nav-item'><%= link_to category.title, category_path(category), class: 'text-success' %></li>
   <% end %>
 </ul>
 <% @items.each do |item| %>
-  <p class='text-center'><%= item.title %> -
+  <p class='text-center'><%= link_to item.title, item_path(item) %> -
+
     <%= number_to_currency(item.price/100) %><br>
     <% if user_signed_in? %>
-      <%= button_to 'Add to Cart', line_items_path(item_id: item), class: 'btn btn-outline-info mx-auto', style: 'display: block;' %>
+      <%= button_to 'Add to Cart', line_items_path(item_id: item), class: 'btn btn-sm btn-outline-info mx-auto', style: 'display: block;' %>
     <% end %>
   </p>
 <% end %>

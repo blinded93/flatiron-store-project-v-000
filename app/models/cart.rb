@@ -2,9 +2,9 @@ class Cart < ActiveRecord::Base
   has_many :line_items
   has_many :items, through: :line_items
 
-  has_one :order
-  has_one :user, through: :order
-
+  belongs_to :order
+  belongs_to :user
+  
   def total
     total = 0.00
     line_items.each do |line_item|
@@ -19,5 +19,9 @@ class Cart < ActiveRecord::Base
     else
       LineItem.new(cart_id: self.id, item_id: item)
     end
+  end
+
+  def empty?
+    self.items.empty?
   end
 end

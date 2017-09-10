@@ -6,6 +6,8 @@
 <% @category.items.each do |item| %>
   <p class='text-center'><%= link_to item.title, item_path(item), class:'menu-font' %> -
     <%= number_to_currency(item.price/100) %><br>
-    <%= button_to 'Add to Cart', line_items_path(item_id: item), class: 'btn btn-outline-info mx-auto', style: 'display: block;' %>
+    <% if user_signed_in? %>
+      <%= button_to 'Add to Cart', line_items_path(item_id: item), class: 'btn btn-sm btn-outline-info mx-auto', style: 'display: block;' %>
+    <% end %>
   </p>
 <% end %>

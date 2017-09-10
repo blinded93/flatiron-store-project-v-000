@@ -3,17 +3,13 @@
     <%= link_to "Store Home", store_path, class: 'nav-link menu-font' %>
   </li>
   <% if user_signed_in? %>
-    <li class='nav-item <%= active_class("/users/#{current_user.id}") %>'>
-      <%= link_to "Homepage", user_path(current_user), class: 'nav-link menu-font' %>
+    <li class='nav-item <%= active_class("/carts/#{current_cart.id}") %>'>
+      <%= link_to "Cart", cart_path(current_cart), class: 'nav-link menu-font' %>
     </li>
-    <% if !!@cart %>
-      <li class='nav-item <%= active_class("/carts/#{current_cart.id}") %>'>
-        <%= link_to "Cart", cart_path(current_cart), class: 'nav-link menu-font' %>
-      </li>
-    <% end %>
-    <li class='nav-item'>
-      <%= link_to "Sign Out", destroy_user_session_path, method:'delete', class: 'nav-link menu-font' %>
+    <li class='nav-item <%= active_class("/users/edit") %>'>
+      <%= link_to "Edit Account", edit_user_registration_path, class: 'nav-link menu-font' %>
     </li>
+
   <% else %>
     <li class='nav-item <%= active_class("/users/sign_in") %>'>
       <%= link_to "Sign In", new_user_session_path, class: 'nav-link menu-font' %>
@@ -23,4 +19,9 @@
     </li>
   <% end %>
 </ul>
-<span class='text-center align-bottom text-info sm-font'><%= "Signed in as " + current_user.email if user_signed_in? %></span>
+<div class="d-flex justify-content-end flex-user">
+  <div class="mr-auto "><span class='text-warning sm-font'><%= "Signed in as " + current_user.email if user_signed_in? %></span>
+  </div>
+  <div class=""><p align='left' class='text-left text-danger'><%= link_to "Sign Out", destroy_user_session_path, method:"delete", class: 'text-danger btn btn-link sm-font text-left' if user_signed_in? %></p>
+  </div>
+</div>
