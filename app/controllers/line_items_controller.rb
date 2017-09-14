@@ -1,12 +1,13 @@
 class LineItemsController < ApplicationController
   def create
-    session[:cart_id] = Cart.set_cart(current_user).id
-    cart_item = current_cart.add_item(params[:item_id])
-    cart_item.cart = current_cart
-    if cart_item.save
-      redirect_to cart_path(current_cart), notice: "#{cart_item.item.title} has been added to your cart!"
+    # binding.pry
+    if cart = current_cart
+      cart.add_item(params[:item_id])
     else
-      redirect_to store_path, notice: "There seems to have been a problem."
+      cart = current_user.carts.create
+      cart.add_item(params[:item_id])
     end
+    cart.save
+    redirect_to cart_path(cart)
   end
 end

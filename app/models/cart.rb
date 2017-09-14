@@ -9,24 +9,25 @@ class Cart < ActiveRecord::Base
     total = 0.00
     line_items.each do |line_item|
       total += (line_item.item.price * line_item.quantity)
+      line_item.save
     end
     total
   end
 
   def add_item(item_id)
-    binding.pry
-    if line_item = self.line_items.find_by(item_id:item_id)
-      line_item.tap {|li| li.quantity += 1}
+    if line_item = line_items.find_by(item_id:item_id)
+      line_item.tap{|li| li.quantity += 1}.save
+      line_item
     else
-      LineItem.new(cart_id: self.id, item_id: item_id)
+      item = line_items.build(item_id: item_id)
     end
   end
 
-  def empty?
-    self.items.empty?
-  end
-
-  def self.set_cart(user)
-    user.carts.where(user_id: user.id).first_or_create(order_id: Order.create.id)
+  def checkout_cart
+    self.update(status: "submitted")
+    line_items.each do |li|
+      item = li.item
+      item.update(inventory: item.inventory - li.quantity)
+    end
   end
 end

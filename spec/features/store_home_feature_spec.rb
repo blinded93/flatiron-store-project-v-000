@@ -3,7 +3,6 @@ describe 'Feature Test: Store', :type => :feature do
       it "displays all of the categories as links" do
         visit store_path
         Category.all.each do |category|
-          # binding.pry
           expect(page).to have_link(category.title, href: category_path(category))
         end
       end
